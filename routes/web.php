@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PackageFeatureController;
 use App\Http\Controllers\PackageInclusionExclusionController;
+use App\Http\Controllers\FaqController;
 
 
 Route::get('/', function () {
@@ -19,6 +20,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::resource('packages', PackageController::class);
 Route::resource('package-features', PackageFeatureController::class);
 Route::resource('packageInclusionExclusions', PackageInclusionExclusionController::class);
+Route::resource('faqs', FaqController::class);
 
 
 Route::middleware('auth')->group(function () {
