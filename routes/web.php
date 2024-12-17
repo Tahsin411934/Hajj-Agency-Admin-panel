@@ -7,7 +7,10 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PackageFeatureController;
 use App\Http\Controllers\PackageInclusionExclusionController;
 use App\Http\Controllers\FaqController;
-
+use App\Http\Controllers\SectionContentController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PageKeywordController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -21,6 +24,10 @@ Route::resource('packages', PackageController::class);
 Route::resource('package-features', PackageFeatureController::class);
 Route::resource('packageInclusionExclusions', PackageInclusionExclusionController::class);
 Route::resource('faqs', FaqController::class);
+Route::resource('sectionContents', SectionContentController::class);
+Route::resource('galleries', GalleryController::class);
+Route::resource('blogs', BlogController::class);
+Route::resource('pagekeywords', PageKeywordController::class);
 
 
 Route::middleware('auth')->group(function () {
