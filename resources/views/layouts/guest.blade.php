@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="icon" href="./logo1.png" type="image/x-icon">
-    <title>Rahman Corporation</title>
+    <title>hajj</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

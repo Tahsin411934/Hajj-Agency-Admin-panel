@@ -25,21 +25,33 @@
                 <tbody>
                     @foreach ($packages as $package)
                     <tr>
-                        <form action="{{ route('packages.update', $package->packageid) }}" method="POST" class="update-form">
+                        <form action="{{ route('packages.update', $package->packageid) }}" method="POST"
+                            class="update-form">
                             @csrf
                             @method('PUT')
                             <td>{{ $package->packageid }}</td>
                             <td>
-                                <textarea name="packageName" class="w-full border border-gray-300 rounded px-2 py-1 resize-none" disabled>{{ $package->packageName }}</textarea>
+                                <textarea name="packageName"
+                                    class="w-full border border-gray-300 rounded px-2 py-1 resize-none"
+                                    disabled>{{ $package->packageName }}</textarea>
                             </td>
                             <td>
-                                <textarea name="price" class="w-full border border-gray-300 rounded px-2 py-1 resize-none" disabled>{{ $package->price }}</textarea>
+                                <textarea name="price"
+                                    class="w-full border border-gray-300 rounded px-2 py-1 resize-none"
+                                    disabled>{{ $package->price }}</textarea>
                             </td>
                             <td>
-                                <textarea name="image" class="w-full border border-gray-300 rounded px-2 py-1 resize-none" disabled>{{ $package->image }}</textarea>
+                                @if($package->image)
+                                <img src="{{ asset('storage/' . $package->image) }}" alt="Feature Image"
+                                    class="w-16 h-16 object-cover rounded border border-gray-300">
+                                @else
+                                <span class="text-gray-400">No Image</span>
+                                @endif
                             </td>
                             <td>
-                                <textarea name="keywords" class="w-full border border-gray-300 rounded px-2 py-1 resize-none" disabled>{{ $package->keywords }}</textarea>
+                                <textarea name="keywords"
+                                    class="w-full border border-gray-300 rounded px-2 py-1 resize-none"
+                                    disabled>{{ $package->keywords }}</textarea>
                             </td>
                             <td class="flex space-x-2">
                                 <button type="button" onclick="enableEdit(this)"
@@ -47,7 +59,8 @@
                                 <button type="submit"
                                     class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 hidden save-button">Save</button>
                         </form>
-                        <form action="{{ route('packages.destroy', $package->packageid) }}" method="POST" class="inline">
+                        <form action="{{ route('packages.destroy', $package->packageid) }}" method="POST"
+                            class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
@@ -81,62 +94,81 @@
                 </div>
 
                 <!-- Modal Body -->
-                <form action="{{ route('packages.store') }}" method="POST" class="p-6 space-y-6">
+                <form action="{{ route('packages.store') }}" method="POST" enctype="multipart/form-data"
+                    class="p-6 space-y-6">
                     @csrf
-                    <div class="grid grid-cols-2 gap-6">
-                        <input type="text" name="packageName" required
-                            class="p-3 border border-gray-300 rounded-lg shadow-sm w-full" placeholder="Package Name">
-                        <input type="number" name="price" 
-                            class="p-3 border border-gray-300 rounded-lg shadow-sm w-full" placeholder="Price">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="packageName" class="block text-sm font-medium text-gray-700">Package
+                                Name</label>
+                            <input type="text" name="packageName" id="packageName" required
+                                class="p-3 border border-gray-300 rounded-lg shadow-sm w-full focus:ring focus:ring-blue-200 focus:outline-none"
+                                placeholder="Package Name">
+                        </div>
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                            <input type="number" name="price" id="price" required
+                                class="p-3 border border-gray-300 rounded-lg shadow-sm w-full focus:ring focus:ring-blue-200 focus:outline-none"
+                                placeholder="Price">
+                        </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-6">
-                        <input type="text" name="image" 
-                            class="p-3 border border-gray-300 rounded-lg shadow-sm w-full" placeholder="Image URL">
-                        <input type="text" name="keywords" 
-                            class="p-3 border border-gray-300 rounded-lg shadow-sm w-full" placeholder="Keywords">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
+                            <input type="file" name="image" id="image" accept="image/*" required class="p-3 border border-gray-300 rounded-lg shadow-sm w-full file:mr-4 file:py-2 file:px-4
+               file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700
+               hover:file:bg-blue-100 focus:ring focus:ring-blue-200 focus:outline-none">
+                        </div>
+                        <div>
+                            <label for="keywords" class="block text-sm font-medium text-gray-700">Keywords</label>
+                            <input type="text" name="keywords" id="keywords"
+                                class="p-3 border border-gray-300 rounded-lg shadow-sm w-full focus:ring focus:ring-blue-200 focus:outline-none"
+                                placeholder="Keywords">
+                        </div>
                     </div>
                     <div class="flex justify-center">
                         <button type="submit"
-                            class="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white py-3 px-6 rounded-lg font-semibold shadow-lg hover:from-blue-600 hover:to-teal-600">
+                            class="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white py-3 px-6 rounded-lg font-semibold shadow-lg hover:from-blue-600 hover:to-teal-600 focus:ring focus:ring-green-200">
                             Add Package
                         </button>
                     </div>
                 </form>
-                
+
+
             </div>
         </div>
     </div>
 </x-app-layout>
 
 <script>
-    function enableEdit(button) {
-        const row = button.closest('tr');
-        row.querySelectorAll('textarea').forEach(textarea => textarea.disabled = false); // Enable all textarea fields
-        button.classList.add('hidden'); // Hide the Edit button
-        row.querySelector('.save-button').classList.remove('hidden'); // Show the Save button
-    }
+function enableEdit(button) {
+    const row = button.closest('tr');
+    row.querySelectorAll('textarea').forEach(textarea => textarea.disabled = false); // Enable all textarea fields
+    button.classList.add('hidden'); // Hide the Edit button
+    row.querySelector('.save-button').classList.remove('hidden'); // Show the Save button
+}
 </script>
 
 <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            @if(session('success'))
-                Toastify({
-                    text: "{{ session('success') }}",
-                    duration: 3000,
-                    close: true,
-                    gravity: "top", // Position: top or bottom
-                    position: "right", // Position: left, center or right
-                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-                }).showToast();
-            @elseif(session('error'))
-                Toastify({
-                    text: "{{ session('error') }}",
-                    duration: 3000,
-                    close: true,
-                    gravity: "top",
-                    position: "right",
-                    backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
-                }).showToast();
-            @endif
-        });
-    </script>
+document.addEventListener("DOMContentLoaded", function() {
+    @if(session('success'))
+    Toastify({
+        text: "{{ session('success') }}",
+        duration: 3000,
+        close: true,
+        gravity: "top", // Position: top or bottom
+        position: "right", // Position: left, center or right
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+    }).showToast();
+    @elseif(session('error'))
+    Toastify({
+        text: "{{ session('error') }}",
+        duration: 3000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+    }).showToast();
+    @endif
+});
+</script>
