@@ -147,10 +147,15 @@ function enableEdit(button) {
     button.classList.add('hidden'); // Hide the Edit button
     row.querySelector('.save-button').classList.remove('hidden'); // Show the Save button
 }
-</script>
 
-<script>
 document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.update-form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            const textareas = form.querySelectorAll('textarea');
+            textareas.forEach(textarea => textarea.disabled = false); // Enable textareas before form submission
+        });
+    });
+
     @if(session('success'))
     Toastify({
         text: "{{ session('success') }}",

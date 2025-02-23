@@ -137,7 +137,7 @@
             <circle cx="12" cy="12" r="10" />
             <circle cx="12" cy="12" r="4" />
         </svg>
-        <span class="ms-3">Gallery</span>
+        <span class="ms-3">Video Gallery</span>
     </a>
 </li>
 <li>

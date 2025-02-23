@@ -55,10 +55,10 @@ class PackageController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Package $package)
-    { 
+    {  
         $validatedData = $request->validate([
             'packageName' => 'required|string|max:255',
-            'price' => 'required|numeric',
+            'price' => 'required|string',
             'image' => 'nullable|string|max:255',
             'keywords' => 'nullable|string|max:255',
         ]);

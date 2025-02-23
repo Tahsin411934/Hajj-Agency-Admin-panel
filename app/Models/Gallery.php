@@ -16,5 +16,6 @@ public $timestamps = false;
     protected $fillable = [
         'image',
         'caption',
+        'video_url',
     ];
 }

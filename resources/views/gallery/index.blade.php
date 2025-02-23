@@ -1,11 +1,11 @@
 <x-app-layout>
     <div class="mx-auto w-[98%] lg:ml-12">
         <div class="flex justify-between items-center w-[90%] mx-auto my-8">
-            <h1 class="text-2xl font-bold">Gallery Content List</h1>
+            <h1 class="text-2xl font-bold">Video Setting</h1>
             <button data-modal-target="default-modal" data-modal-toggle="default-modal"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
                 type="button">
-                Add Gallery Content
+                Add Video
             </button>
         </div>
 
@@ -14,7 +14,8 @@
             <table id="example" class="display w-full">
                 <thead>
                     <tr>
-                        <th>Image</th>
+                        <th>Thumbnail Upload</th>
+                        <th>Video Url </th>
                         <th>Caption</th>
                         <th>Actions</th>
                     </tr>
@@ -34,8 +35,12 @@
                                 @endif
                             </td>
                             <td>
+                                <input type="text" name="video_url" class="w-full border border-gray-300 rounded px-2 py-1" value="{{ $item->video_url }}" disabled />
+                            </td>
+                            <td>
                                 <input type="text" name="caption" class="w-full border border-gray-300 rounded px-2 py-1" value="{{ $item->caption }}" disabled />
                             </td>
+                            
                             <td class="flex space-x-2">
                                 <button type="button" onclick="enableEdit(this)" class="bg-blue-900 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</button>
                                 <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 hidden save-button">Save</button>
@@ -77,8 +82,10 @@
                 <form action="{{ route('galleries.store') }}" method="POST" class="p-6 space-y-6" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 gap-6">
+                    <input type="text" name="video_url" class="w-full border border-gray-300 rounded px-2 py-1" value="{{ $item->video_url }}" placeholder="video_url" />
                         <input type="file" name="image" class="p-3 border border-gray-300 rounded-lg shadow-sm w-full" required />
                         <input type="text" name="caption" class="p-3 border border-gray-300 rounded-lg shadow-sm w-full" placeholder="Caption" required />
+                    
                     </div>
                     <div class="flex justify-center">
                         <button type="submit"
